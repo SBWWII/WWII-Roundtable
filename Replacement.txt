@@ -1,0 +1,229 @@
+Replacement
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World War II Roundtable</title>
+  <style>
+    /* General Navigation Styles */
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+    nav ul li {
+      position: relative;
+      padding: 10px;
+    }
+    nav ul li ul {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      position: absolute;
+      background-color: white;
+      padding: 0;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      max-height: 0;
+      overflow: hidden;
+    }
+    nav ul li:hover ul,
+    nav ul li:focus-within ul {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+    nav ul li ul li {
+      display: block;
+      padding: 8px 12px;
+    }
+    nav a {
+      text-decoration: none;
+      color: red;
+      display: block;
+    }
+    nav a:hover {
+      background-color: #f0f0f0;
+    }
+    nav a.active {
+      color: red;
+      font-weight: bold;
+    }
+
+    /* Hamburger Button Styles */
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      z-index: 2000;
+    }
+    .menu-toggle::after {
+      content: "☰";
+    }
+
+    /* Page Layout */
+    body {
+      background: #6baed5;
+      color: gray;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Content Boxes */
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .box {
+      background-color: white;
+      padding: 20px;
+      border: 2px solid black;
+      flex: 0 1 300px;
+      max-width: 300px;
+      text-align: center;
+    }
+    .box img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+    .description {
+      margin-top: 10px;
+      font-weight: bold;
+      color: white;
+      background-color: black;
+      padding: 5px;
+    }
+
+    /* Form Styles */
+    .form-container {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      width: min(90%, 500px);
+    }
+    button {
+      padding: 10px 15px;
+      background-color: navy;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: red;
+    }
+
+    /* Mobile Menu Animation */
+    @media (max-width: 768px) {
+      nav ul {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        flex-direction: column;
+        width: 100%;
+        background-color: white;
+        transition: max-height 0.5s ease, opacity 0.5s ease;
+      }
+      nav ul.show {
+        max-height: 500px;
+        opacity: 1;
+      }
+      nav ul li {
+        text-align: center;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>World War II Roundtable</h1>
+
+  <!-- Image Gallery -->
+  <div class="container">
+    <div class="box">
+      <img src="images/image1.jpg" alt="Historic WW2 discussion" loading="lazy">
+      <p class="description">Historic WW2 discussion</p>
+      <p class="description">WWII Victory in Europe</p>
+    </div>
+    <div class="box">
+      <img src="images/image2.jpg" alt="WW2 artifacts display" loading="lazy">
+      <p class="description">WW2 artifacts display</p>
+      <p class="description">America entering WWII</p>
+    </div>
+    <div class="box">
+      <img src="images/image3.jpg" alt="WW2 veterans gathering" loading="lazy">
+      <p class="description">WW2 veterans gathering</p>
+      <p class="description">WWII Victory in Japan</p>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <h2>Submit Your Information</h2>
+    <form id="dataForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Your Cell Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <button type="submit">Submit Your Information</button>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+  document.getElementById("dataForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let jsonData = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value
+      };
+
+      fetch("http://127.0.0.1:5000/submit", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jsonData)
+      })
+      .then(response => response.text())
+      .then(data => alert("Submission Successful: " + data))
+      .catch(error => console.error("Error submitting data:", error));
+  });
+  </script>
+
+</body>
+</html>
