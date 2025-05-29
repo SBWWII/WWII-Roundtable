@@ -209,23 +209,17 @@ html
     </div>
   </div>
 
-  <!-- Navigation Section - Now placed below the images -->
-  <nav>
+<!-- Navigation Section - Now placed below the images -->
+<nav>
     <ul>
-      <li aria-haspopup="true">
-        <a href="Meeting/meeting-agenda.html">Meeting</a>
-        <ul>
-          <li><a href="Meeting/meeting-minutes.html">Meeting Minutes</a></li>
-          <li><a href="Meeting/agenda.html">Agenda</a></li>
-        </ul>
-      </li>
-      <li><a href="Bylaws/bylaws.html">Bylaws</a></li>
-      <li><a href="People/members.html">People</a></li>
-      <li><a href="News/news.html">News</a></li>
-      <li><a href="References/resources.html">References</a></li>
+        <li><a href="Meeting/meeting.html">Meeting</a></li>
+        <li><a href="Bylaws/bylaws.html">Bylaws</a></li>
+       <li><a href="People/board-members.html">Board Members</a></li>
+       <li><a href="People/contributing-members.html">Contributing Members</a></li>
+        <li><a href="News/news.html">News</a></li>
+        <li><a href="References/resources.html">References</a></li>
     </ul>
-  </nav>
-
+</nav>
   <!-- Hamburger Menu Toggle -->
   <button class="menu-toggle" aria-label="Toggle Menu"></button>
 
@@ -241,88 +235,81 @@ html
     <label for="phone">Your Cell Phone:</label><br>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required aria-label="Enter your phone number"><br><br>
 
-         <button type="button" onclick="displayData()">Submit Your Information</button>
+  <button id="submitButton">Submit Your Information</button>
     </form>
     <div id="submittedData"></div>
 
-    <script>
-        function displayData() {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const submitButton = document.getElementById("submitButton");
+    if (submitButton) {
+        submitButton.addEventListener("click", submitToPython);
+    } else {
+        console.error("Error: submitButton not found!");
+    }
+});
 
-            const submittedDataDiv = document.getElementById("submittedData");
-            submittedDataDiv.innerHTML = `
-                <h3>Submitted Information:</h3>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone}</p>`;
-        }
-    </script>
-  <!-- JavaScript -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById("submitButton").addEventListener("click", submitToPython);
-  });
+function submitToPython(event) {
+    event.preventDefault(); // Stop default form submission
 
-  function submitToPython(event) {
-      event.preventDefault(); // Stop default form submission
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const errorDiv = document.getElementById("errorMessage");
+    const submittedDataDiv = document.getElementById("submittedData");
 
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const errorDiv = document.getElementById("errorMessage");
-      const submittedDataDiv = document.getElementById("submittedData");
+    // Clear previous errors and submitted info
+    errorDiv.innerHTML = "";
+    submittedDataDiv.innerHTML = "";
+    let isValid = true;
 
-      // Clear previous errors and submitted info
-      errorDiv.innerHTML = "";
-      submittedDataDiv.innerHTML = "";
-      let isValid = true;
+    // Validation checks
+    if (name.length < 3) {
+        errorDiv.innerHTML += "<p>Name must be at least 3 characters long.</p>";
+        isValid = false;
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+        errorDiv.innerHTML += "<p>Please enter a valid email address.</p>";
+        isValid = false;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+        errorDiv.innerHTML += "<p>Phone number must be exactly 10 digits.</p>";
+        isValid = false;
+    }
 
-      // Validation checks
-      if (name.length < 3) {
-          errorDiv.innerHTML += "<p>Name must be at least 3 characters long.</p>";
-          isValid = false;
-      }
-      if (!email.includes("@") || !email.includes(".")) {
-          errorDiv.innerHTML += "<p>Please enter a valid email address.</p>";
-          isValid = false;
-      }
-      if (!/^\d{10}$/.test(phone)) {
-          errorDiv.innerHTML += "<p>Phone number must be exactly 10 digits.</p>";
-          isValid = false;
-      }
+    // If validation fails, stop submission
+    if (!isValid) {
+        alert("Please fix the errors before submitting.");
+        return;
+    }
 
-      // If validation fails, stop submission
-      if (!isValid) {
-          alert("Please fix the errors before submitting.");
-          return;
-      }
+    // Display the submitted information
+    submittedDataDiv.innerHTML = `
+        <h3>Submitted Information:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+    `;
 
-      // Display the submitted information
-      submittedDataDiv.innerHTML = `
-          <h3>Submitted Information:</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-      `;
+    // Prepare the data for submission
+    const jsonData = { name, email, phone };
 
-      // Prepare the data for submission
-      const jsonData = { name, email, phone };
-
-      // Send data to Python script running locally
-      fetch("http://localhost:5000/submit", {  
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(jsonData)
-      })
-      .then(response => response.text())
-      .then(data => {
-          console.log("Data submitted successfully: " + data);
-      })
-      .catch(error => {
-          console.error("Error submitting data:", error);
-          errorDiv.innerHTML = "<p>There was an error submitting your information.</p>";
-      });
-  }
+    // Send data to Python server (use either localhost or Railway)
+    fetch("https://your-app-name.railway.app/submit", {  
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Data submitted successfully: " + data);
+        alert("✅ Submitted successfully!");
+    })
+    .catch(error => {
+        console.error("Error submitting data:", error);
+        errorDiv.innerHTML = "<p>There was an error submitting your information.</p>";
+    });
+}
 </script>
+</body>
+</html>

@@ -1,4 +1,0 @@
-.gitignore
-# Ignore common OS files
-Thumbs.db
-desktop.ini
