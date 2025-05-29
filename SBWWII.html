@@ -1,12 +1,11 @@
-Replacement
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World War II Roundtable</title>
+
+  <!-- Styles Section -->
   <style>
     /* General Navigation Styles */
     nav ul {
@@ -19,30 +18,6 @@ Replacement
       position: relative;
       padding: 10px;
     }
-    nav ul li ul {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      position: absolute;
-      background-color: white;
-      padding: 0;
-      border: 1px solid #ccc;
-      z-index: 1000;
-      max-height: 0;
-      overflow: hidden;
-    }
-    nav ul li:hover ul,
-    nav ul li:focus-within ul {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-      max-height: 500px;
-    }
-    nav ul li ul li {
-      display: block;
-      padding: 8px 12px;
-    }
     nav a {
       text-decoration: none;
       color: red;
@@ -54,30 +29,6 @@ Replacement
     nav a.active {
       color: red;
       font-weight: bold;
-    }
-
- /* Dropdown arrow for menu items with submenus */
-    nav ul li[aria-haspopup="true"] > a::after {
-      content: " ▼";
-      font-size: 0.8em;
-    }
-    nav ul li[aria-haspopup="true"]:hover > a::after,
-    nav ul li[aria-haspopup="true"]:focus-within > a::after {
-      content: " ▲";
-    }
-
-    /* Hamburger Button Styles */
-    .menu-toggle {
-      display: none;
-      font-size: 2rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      margin: 10px;
-      z-index: 2000;
-    }
-    .menu-toggle::after {
-      content: "☰";
     }
 
     /* Page Layout */
@@ -93,7 +44,7 @@ Replacement
       padding: 0;
     }
 
-    /* Content Boxes */
+    /* Content Display */
     .container {
       display: flex;
       justify-content: center;
@@ -115,16 +66,6 @@ Replacement
       height: auto;
       object-fit: cover;
       display: block;
-    }
-    .description {
-      margin-top: 10px;
-      font-weight: bold;
-      color: white;
-      background-color: black;
-      padding: 5px;
-      text-align: center;
-      display: block;
-
     }
 
     /* Form Styles */
@@ -149,6 +90,7 @@ Replacement
     button:hover {
       background-color: red;
     }
+    
     /* Error Message */
     #errorMessage {
       color: red;
@@ -161,36 +103,13 @@ Replacement
       border: 2px solid black;
       width: min(90%, 500px);
     }
-
- /* Mobile Menu Slide + Fade Animation */
-    @media (max-width: 768px) {
-      nav ul {
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-        flex-direction: column;
-        width: 100%;
-        background-color: white;
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-      }
-      nav ul.show {
-        max-height: 500px;
-        opacity: 1;
-      }
-      nav ul li {
-        text-align: center;
-      }
-      .menu-toggle {
-        display: block;
-      }
-    }
   </style>
 </head>
 
-html
 <body>
   <h1>World War II Roundtable</h1>
 
+  <!-- Content Section -->
   <div class="container">
     <div class="box">
       <img src="images/image1.jpg" alt="Historic WW2 discussion" loading="lazy">
@@ -209,22 +128,21 @@ html
     </div>
   </div>
 
-<!-- Navigation Section - Now placed below the images -->
-<nav>
-    <ul>
-        <li><a href="Meeting/meeting.html">Meeting</a></li>
-        <li><a href="Bylaws/bylaws.html">Bylaws</a></li>
-       <li><a href="People/board-members.html">Board Members</a></li>
-       <li><a href="People/contributing-members.html">Contributing Members</a></li>
-        <li><a href="News/news.html">News</a></li>
-        <li><a href="References/resources.html">References</a></li>
-    </ul>
-</nav>
-  <!-- Hamburger Menu Toggle -->
-  <button class="menu-toggle" aria-label="Toggle Menu"></button>
+  <!-- Navigation Section -->
+  <nav>
+      <ul>
+          <li><a href="Meeting/meeting.html" aria-label="Meeting Information">Meeting</a></li>
+          <li><a href="Bylaws/bylaws.html" aria-label="Bylaws">Bylaws</a></li>
+          <li><a href="People/board-members.html" aria-label="Board Members">Board Members</a></li>
+          <li><a href="People/contributing-members.html" aria-label="Contributing Members">Contributing Members</a></li>
+          <li><a href="News/news.html" aria-label="News">News</a></li>
+          <li><a href="References/resources.html" aria-label="References">References</a></li>
+      </ul>
+  </nav>
 
   <p>Sign Up to Join the Discussion</p>
 
+  <!-- Form Section -->
   <form id="myForm">
     <label for="name">Your Name:</label><br>
     <input type="text" id="name" name="name" required aria-label="Enter your name"><br><br>
@@ -235,81 +153,58 @@ html
     <label for="phone">Your Cell Phone:</label><br>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required aria-label="Enter your phone number"><br><br>
 
-  <button id="submitButton">Submit Your Information</button>
-    </form>
-    <div id="submittedData"></div>
+    <button id="submitButton">Submit Your Information</button>
+  </form>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const submitButton = document.getElementById("submitButton");
-    if (submitButton) {
-        submitButton.addEventListener("click", submitToPython);
-    } else {
-        console.error("Error: submitButton not found!");
-    }
-});
+  <div id="submittedData"></div>
 
-function submitToPython(event) {
-    event.preventDefault(); // Stop default form submission
+  <!-- JavaScript Section -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("myForm");
+      if (form) {
+          form.addEventListener("submit", submitToPython);
+      } else {
+          console.error("Error: Form not found!");
+      }
+  });
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const errorDiv = document.getElementById("errorMessage");
-    const submittedDataDiv = document.getElementById("submittedData");
+  // Function to handle form submission
+  function submitToPython(event) {
+      event.preventDefault(); // Stop default form submission
 
-    // Clear previous errors and submitted info
-    errorDiv.innerHTML = "";
-    submittedDataDiv.innerHTML = "";
-    let isValid = true;
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const submittedDataDiv = document.getElementById("submittedData");
 
-    // Validation checks
-    if (name.length < 3) {
-        errorDiv.innerHTML += "<p>Name must be at least 3 characters long.</p>";
-        isValid = false;
-    }
-    if (!email.includes("@") || !email.includes(".")) {
-        errorDiv.innerHTML += "<p>Please enter a valid email address.</p>";
-        isValid = false;
-    }
-    if (!/^\d{10}$/.test(phone)) {
-        errorDiv.innerHTML += "<p>Phone number must be exactly 10 digits.</p>";
-        isValid = false;
-    }
+      // Display submitted information
+      submittedDataDiv.innerHTML = `
+          <h3>Submitted Information:</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+      `;
 
-    // If validation fails, stop submission
-    if (!isValid) {
-        alert("Please fix the errors before submitting.");
-        return;
-    }
+      // Prepare data for submission
+      const jsonData = { name, email, phone };
 
-    // Display the submitted information
-    submittedDataDiv.innerHTML = `
-        <h3>Submitted Information:</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-    `;
+      // Send data to Python server
+      fetch("https://your-app-name.railway.app/submit", {  
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData)
+      })
+      .then(response => response.text())
+      .then(data => {
+          console.log("Server Response:", data);
+          alert("✅ Submitted successfully!");
+      })
+      .catch(error => {
+          console.error("Error submitting data:", error);
+      });
+  }
+  </script>
 
-    // Prepare the data for submission
-    const jsonData = { name, email, phone };
-
-    // Send data to Python server (use either localhost or Railway)
-    fetch("https://your-app-name.railway.app/submit", {  
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(jsonData)
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Data submitted successfully: " + data);
-        alert("✅ Submitted successfully!");
-    })
-    .catch(error => {
-        console.error("Error submitting data:", error);
-        errorDiv.innerHTML = "<p>There was an error submitting your information.</p>";
-    });
-}
-</script>
 </body>
 </html>

@@ -1,25 +1,22 @@
-import csv  # No indentation (0 spaces)
-
 # Open the CSV file safely
-import csv  # No indentation (0 spaces)
-
-csv_file = "F:/GitHub/SBWWII/signup.csv"  # No indentation (0 spaces)
-
-# Open the CSV file safely
-with open(csv_file, mode="a", encoding="utf-8") as file:  # No indentation (0 spaces)
-    reader = csv.reader(file)  # Indented exactly 4 spaces inside 'with open'
-
-    for row in reader:  # Indented exactly 4 spaces inside 'reader'
-        print(row)  # Indented exactly 4 spaces inside 'for row in reader'    reader = csv.reader(file)  # Indented exactly 4 spaces inside 'with open'
-
-
 import csv
 
-csv_file = "F:/GitHub/SBWWII/signup.csv"
+csv_file = "C:/Users/Jakee/Documents/GitHub/SBWWII/signup.csv"
 
-# Open the file in append mode
+# First, read existing content
+with open(csv_file, mode="r", encoding="utf-8") as file:
+    reader = csv.reader(file)  # ✅ Only define this once
+    for row in reader:
+        print(row)  # ✅ Prints existing CSV rows correctly
+
+# Now, append new data to the CSV file
 with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
     writer = csv.writer(file)
+    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # ✅ Adds new row
 
-    # Example row to append
-    writer.writerow(["John", "Doe", "johndoe@example.com"])
+print("✅ New data has been written to the CSV file!")# Append new data to the CSV file
+with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # Example entry
+
+print("✅ New data has been written to the CSV file!")
