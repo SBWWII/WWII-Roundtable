@@ -20,12 +20,3 @@ with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
     writer.writerow(["John Doe", "john@example.com", "9876543210"])  # Example entry
 
 print("✅ New data has been written to the CSV file!")
-import csv
-from datetime import datetime  # Import datetime module
-
-def append_to_csv(data):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Generate timestamp
-    with open("signup.csv", mode="a", encoding="utf-8", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow([data["name"], data["email"], data["phone"], timestamp])  # Add timestamp
-        print(f"✅ Data appended successfully at {timestamp}!")
