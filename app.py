@@ -1,31 +1,19 @@
-# Open the CSV file safely
 import csv
+from database_util import append_to_csv  # ✅ Import correct function
 
-csv_file = "C:/Users/Jakee/Documents/GitHub/SBWWII/signup.csv"
+csv_file = "signup.csv"  # ✅ Ensure correct file path
 
-# First, read existing content
+# ✅ Read and display existing CSV content
 with open(csv_file, mode="r", encoding="utf-8") as file:
-    reader = csv.reader(file)  # ✅ Only define this once
+    reader = csv.reader(file)
     for row in reader:
         print(row)  # ✅ Prints existing CSV rows correctly
 
-# Now, append new data to the CSV file
-with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # ✅ Adds new row
+# ✅ Append new data using `database_util.py`
+new_data = {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "9876543210"
+}
 
-print("✅ New data has been written to the CSV file!")# Append new data to the CSV file
-with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # Example entry
-
-print("✅ New data has been written to the CSV file!")
-import csv
-from datetime import datetime  # Import datetime module
-
-def append_to_csv(data):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Generate timestamp
-    with open("signup.csv", mode="a", encoding="utf-8", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow([data["name"], data["email"], data["phone"], timestamp])  # Add timestamp
-        print(f"✅ Data appended successfully at {timestamp}!")
+append_to_csv(new_data)  # ✅ Calls function with duplicate prevention & timestamp
