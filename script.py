@@ -1,22 +1,36 @@
-# Open the CSV file safely
+import asyncio
 import csv
+import os
+from fastapi_mail import FastMail, MessageSchema
+from email_config import conf  # Ensure email_config.py exists
 
-csv_file = "C:/Users/Jakee/Documents/GitHub/SBWWII/signup.csv"
+# Define the CSV file path
+csv_file = "C:/Users/Jakee/Documents/GitHub/SBWWII/signup_list.csv"
 
-# First, read existing content
-with open(csv_file, mode="r", encoding="utf-8") as file:
-    reader = csv.reader(file)  # ✅ Only define this once
-    for row in reader:
-        print(row)  # ✅ Prints existing CSV rows correctly
+# Function to send email notification
+async def send_email(name, email, phone):
+    message = MessageSchema(
+        subject="New Signup Notification",
+        recipients=["sbwwiiroundtable@gmail.com"],
+        body=f"New signup:\nName: {name}\nEmail: {email}\nPhone: {phone}",
+        subtype="plain",
+    )
 
-# Now, append new data to the CSV file
-with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # ✅ Adds new row
+    fm = FastMail(conf)
+    await fm.send_message(message)
 
-print("✅ New data has been written to the CSV file!")# Append new data to the CSV file
-with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow(["John Doe", "john@example.com", "9876543210"])  # Example entry
+# Function to append new signup and trigger email
+async def add_signup(name, email, phone):
+    # Append data to the CSV file **(Single Instance)**
+    with open(csv_file, mode="a", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([name, email, phone])
 
-print("✅ New data has been written to the CSV file!")
+    print(f"✅ New data has been written to the CSV file for {name}!")
+
+    # Send email notification
+    await send_email(name, email, phone)
+
+# **Run the function with test data**
+if __name__ == "__main__":
+    asyncio.run(add_signup("John Doe", "john@example.com", "9876543210"))
