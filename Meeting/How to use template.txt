@@ -1,0 +1,9 @@
+How to use template
+
+How to Use This Template
+- Copy this template for each new meeting.
+- Replace [Month] [Year] with the actual meeting date.
+- Replace [Speaker Name] with the speaker’s name.
+- Fill in the background and agenda with details.
+- Save the file as meeting/meeting_YYYY_MM.html.
+- Upload the agenda PDF to meeting/Agendas/ and update the link.
