@@ -1,0 +1,56 @@
+contributing member
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>contributing member</title>
+  <script>
+    // contributing member List
+    const contributingmember = [
+      { name: "John Doe", details: "WWII Veteran, Speaker" },
+      { name: "Jane Smith", details: "Historian, Author" },
+      { name: "George Johnson", details: "Researcher, Military History Enthusiast" }
+    ];
+
+    function generatecontributingmember() {
+      const contributingmemberList = document.getElementById("memberList");
+      contributingmemberList.innerHTML = ""; // Clear previous content
+
+      contributingmember.forEach(member => {
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `<strong>${member.name}</strong>: ${member.details}`;
+        contributingmemberList.appendChild(listItem);
+      });
+    }
+
+    function addmember() {
+      const nameInput = document.getElementById("name").value;
+      const detailsInput = document.getElementById("details").value;
+
+      if (nameInput && detailsInput) {
+        contributingmember.push({ name: nameInput, details: detailsInput }); // Add new member
+        generatecontributingmember(); // Refresh list
+        document.getElementById("name").value = ""; // Clear input fields
+        document.getElementById("details").value = "";
+      }
+    }
+
+    // Ensure function runs properly on page load
+    window.addEventListener("load", generatecontributingmember);
+  </script>
+</head>
+<body>
+  <h1>contributing member</h1>
+
+   <!-- member List -->
+  <ul id="memberList">
+    <!-- JavaScript will generate member here -->
+  </ul>
+
+  <nav>
+   <nav>
+    <a href="../../index.html">Return to Home</a>
+  </nav>
+  </nav>
+</body>
+</html>

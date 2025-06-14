@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World War II Roundtable</title>
+
+  <!-- Styles Section -->
+  <style>
+    /* General Navigation Styles */
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+    nav ul li {
+      position: relative;
+      padding: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: red;
+      display: block;
+    }
+    nav a:hover {
+      background-color: #f0f0f0;
+    }
+    nav a.active {
+      color: red;
+      font-weight: bold;
+    }
+
+    /* Page Layout */
+    body {
+      background: #6baed5;
+      color: gray;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Content Display */
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .box {
+      background-color: white;
+      padding: 20px;
+      border: 2px solid black;
+      flex: 0 1 300px;
+      max-width: 300px;
+      text-align: center;
+    }
+    .box img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>World War II Roundtable</h1>
+
+  <!-- Content Section -->
+  <div class="container">
+    <div class="box">
+      <img src="images/image1.jpg" alt="Historic WW2 discussion" loading="lazy">
+      <p class="description">Historic WW2 discussion</p>
+      <p class="description">WWII Victory in Europe</p>
+    </div>
+    <div class="box">
+      <img src="images/image2.jpg" alt="WW2 artifacts display" loading="lazy">
+      <p class="description">WW2 artifacts display</p>
+      <p class="description">America entering WWII</p>
+    </div>
+    <div class="box">
+      <img src="images/image3.jpg" alt="WW2 veterans gathering" loading="lazy">
+      <p class="description">WW2 veterans gathering</p>
+      <p class="description">WWII Victory in Japan</p>
+    </div>
+  </div>
+
+ <!-- Navigation Section -->
+<nav>
+  <ul>
+    <li aria-haspopup="true">
+      <a href="meeting/meeting.html">Meetings</a>
+      <ul>         
+    </li>
+    <li><a href="people/board-members/index.html">Board Members</a></li>
+    <li><a href="people/contributing-members/index.html">Contributing Members</a></li>
+    <li><a href="news/index.html">News</a></li>
+    <li><a href="references/index.html">References</a></li>
+  </ul>
+</nav>
+  
